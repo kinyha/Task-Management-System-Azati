@@ -41,16 +41,20 @@ class Task(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     val createdBy: User,
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-
-    @UpdateTimestamp
-    val updatedAt: LocalDateTime? = null,
-
+    
     val deadline: LocalDateTime? = null
+	
 ) {
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
+	lateinit var createdAt: LocalDateTime
+		//private set
+	
+	@UpdateTimestamp
+	var updatedAt: LocalDateTime? = null
+		//private set
+
+	
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -70,7 +74,9 @@ class Task(
         status == TaskStatus.BLOCKED && newStatus != TaskStatus.TODO -> false
         else -> true
     }
-
-    fun isOverdue(): Boolean =
-        deadline != null && LocalDateTime.now().isAfter(deadline) && status != TaskStatus.DONE
+	
+	val isOverdue: Boolean
+		get() = deadline?.let {
+			LocalDateTime.now().isAfter(it) && status != TaskStatus.DONE
+		} == true
 }
