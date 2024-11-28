@@ -6,5 +6,5 @@ enum class Priority(val weight: Int) {
     HIGH(3),
     CRITICAL(4);
 
-    fun isUrgent() = this in listOf(HIGH, CRITICAL)
+    val isUrgent get() = this in listOf(HIGH, CRITICAL)
 }

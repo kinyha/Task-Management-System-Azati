@@ -13,7 +13,7 @@ import java.util.*
 
 @Entity
 @Table(name = "tasks")
-data class Task(
+class Task(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID = UUID.randomUUID(),
@@ -51,6 +51,19 @@ data class Task(
 
     val deadline: LocalDateTime? = null
 ) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Task
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
     fun canTransitionTo(newStatus: TaskStatus): Boolean = when {
         status == newStatus -> false
         status == TaskStatus.DONE -> false
