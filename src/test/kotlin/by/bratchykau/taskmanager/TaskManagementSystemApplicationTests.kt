@@ -1,4 +1,4 @@
-package by.bratchykau.task_management_system
+package by.bratchykau.taskmanager
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

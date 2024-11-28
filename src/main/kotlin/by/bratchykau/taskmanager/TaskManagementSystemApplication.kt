@@ -1,4 +1,4 @@
-package by.bratchykau.task_management_system
+package by.bratchykau.taskmanager
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
