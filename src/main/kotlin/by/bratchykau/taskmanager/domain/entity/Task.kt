@@ -48,11 +48,12 @@ class Task(
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	lateinit var createdAt: LocalDateTime
-		//private set
-	
-	@UpdateTimestamp
-	var updatedAt: LocalDateTime? = null
-		//private set
+        set
+
+    @UpdateTimestamp
+    @Column(nullable = true)
+    var updatedAt: LocalDateTime? = null
+		protected set
 
 	
     override fun equals(other: Any?): Boolean {

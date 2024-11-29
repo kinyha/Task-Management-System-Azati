@@ -35,7 +35,7 @@ class User(
 
         other as User
 
-        return id == (other as User).id
+        return id == other.id
     }
 
     override fun hashCode(): Int {

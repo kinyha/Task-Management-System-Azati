@@ -1,6 +1,8 @@
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS users;
+-- Drop tables if they exist
+DROP TABLE IF EXISTS tasks CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
+-- Create users table
 CREATE TABLE IF NOT EXISTS users
 (
     id       UUID PRIMARY KEY,
@@ -10,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users
     role     VARCHAR(20)  NOT NULL
 );
 
+-- Create tasks table
 CREATE TABLE IF NOT EXISTS tasks
 (
     id               UUID PRIMARY KEY,
