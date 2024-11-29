@@ -2,6 +2,7 @@ package by.bratchykau.taskmanager.domain.entity
 
 import by.bratchykau.taskmanager.domain.enums.UserRole
 import jakarta.persistence.*
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import java.util.*
@@ -18,14 +19,15 @@ class User(
     @Column(unique = true, nullable = false)
     val username: String,
 
+    @Email
     @Column(nullable = false)
     val email: String,
 
     @Column(nullable = false)
-    val passwordHash: String,
+    val password: String,
 
     @Enumerated(EnumType.STRING)
-    val role: UserRole = UserRole.REGULAR
+    val role: UserRole = UserRole.REGULAR,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -33,7 +35,7 @@ class User(
 
         other as User
 
-        return id == other.id
+        return id == (other as User).id
     }
 
     override fun hashCode(): Int {

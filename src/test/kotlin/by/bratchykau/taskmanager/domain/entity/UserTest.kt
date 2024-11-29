@@ -8,7 +8,7 @@ import kotlin.test.Test
 class UserTest {
     @Test
     fun `should create user with default role`() {
-        val user = User(username = "test_user", email = "test@example.com", passwordHash = "hashed_password")
+        val user = User(username = "test_user", email = "test@example.com", password = "hashed_password")
         assertEquals(UserRole.REGULAR, user.role)
     }
 }
