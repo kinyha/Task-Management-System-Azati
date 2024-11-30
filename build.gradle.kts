@@ -27,6 +27,9 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.flywaydb:flyway-core:10.4.1")
 	implementation("org.flywaydb:flyway-database-postgresql:10.4.1")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.retry:spring-retry")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -54,7 +57,10 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-// Add after your existing configuration
+tasks.bootJar {
+	archiveFileName.set("app.jar")
+}
+
 tasks.register<ProjectStateGenerator>("generateProjectState") {
 	group = "documentation"
 	description = "Generates PROJECT_STATE.md with current project state"

@@ -2,9 +2,9 @@ spring:
   application:
     name: TaskManagementSystem
   datasource:
-    url: jdbc:postgresql://localhost:5432/task_manager
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/task_manager}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 20000
@@ -15,6 +15,15 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health,info
+      endpoint:
+        health:
+          show-details: always
 
 
   flyway:
