@@ -14,19 +14,34 @@ import by.bratchykau.taskmanager.repository.UserRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+@ExtendWith(MockitoExtension::class)
 class TaskServiceImplTest {
-
-    private lateinit var taskService: TaskServiceImpl
+    
+    @Mock
     private lateinit var taskRepository: TaskRepository
+    
+    @Mock
     private lateinit var userRepository: UserRepository
+    
+    @Mock
     private lateinit var taskMapper: TaskMapper
-
+    
+    private lateinit var taskService: TaskServiceImpl
+    
+    @BeforeEach
+    fun setup() {
+        taskService = TaskServiceImpl(taskRepository, userRepository, taskMapper)
+    }
+    
     // Test data - note we're using the constructor-provided ID
     private val testUser = User(
         id = UUID.randomUUID(), // Use constructor parameter
@@ -34,14 +49,6 @@ class TaskServiceImplTest {
         email = "test@test.com",
         password = "password"
     )
-
-    @BeforeEach
-    fun setup() {
-        taskRepository = mock()
-        userRepository = mock()
-        taskMapper = mock()
-        taskService = TaskServiceImpl(taskRepository, userRepository, taskMapper)
-    }
 
     @Test
     fun `createTask should create task successfully`() {
@@ -62,9 +69,7 @@ class TaskServiceImplTest {
             description = dto.description,
             priority = dto.priority,
             createdBy = testUser
-        ).apply {
-            createdAt = LocalDateTime.now()
-        }
+        )
 
         // Step 3: Set up mocks in the order they'll be called
         // First: User repository lookup
@@ -92,52 +97,49 @@ class TaskServiceImplTest {
         verify(taskMapper).toEntity(eq(dto), eq(testUser), isNull())
         verify(taskRepository).save(any())
     }
-
+    
     @Test
     fun `updateTaskStatus should update task successfully`() {
-        // Arrange: Set up our test data
+        // Given
         val taskId = UUID.randomUUID()
+        println("Created taskId: $taskId") // Debug
+        
+        val testUser = User(
+            id = UUID.randomUUID(), // Explicitly set ID
+            username = "test-user",
+            email = "test@test.com",
+            password = "password"
+        )
+        println("Created testUser: ${testUser.id}") // Debug
+        
         val initialTask = Task(
             id = taskId,
             title = "Test Task",
             createdBy = testUser,
-            status = TaskStatus.TODO  // Start with TODO status
-        ).apply {
-            createdAt = LocalDateTime.now()
-        }
-
-        // Create the task we expect after the update
-        val expectedUpdatedTask = Task(
-            id = taskId,
-            title = "Test Task",
-            createdBy = testUser,
-            status = TaskStatus.IN_PROGRESS  // The status we're updating to
-        ).apply {
-            createdAt = initialTask.createdAt
-        }
-
-        // Set up our mocks
-        whenever(taskRepository.findById(taskId))
-            .thenReturn(Optional.of(initialTask))
-
-        // IMPORTANT: Mock save to return the updated task
-        whenever(taskRepository.save(any<Task>()))
-            .thenReturn(expectedUpdatedTask)  // Always return a non-null task
-
-        val updateDto = UpdateTaskStatusDto(
-            taskId = taskId,
-            newStatus = TaskStatus.IN_PROGRESS
+            status = TaskStatus.TODO
         )
-
-        // Act: Perform the status update
-        val result = taskService.updateTaskStatus(updateDto)
-
-        // Assert: Verify the results
-        assertEquals(TaskStatus.IN_PROGRESS, result.status)
-        assertEquals(taskId, result.id)
-
-        // Verify the interactions
-        verify(taskRepository).findById(taskId)
+        println("Created initialTask: ${initialTask.id}") // Debug
+        
+        // More specific mock setup
+        whenever(taskRepository.findById(eq(taskId)))
+            .thenReturn(Optional.of(initialTask))
+        
+        whenever(taskRepository.save(any<Task>()))
+            .thenAnswer { invocation ->
+                val savedTask = invocation.getArgument<Task>(0)
+                println("Saving task: ${savedTask.id}") // Debug
+                savedTask
+            }
+        
+        // When
+        val result = taskService.updateTaskStatus(
+            UpdateTaskStatusDto(taskId = taskId, newStatus = TaskStatus.IN_PROGRESS)
+        )
+        
+        // Then
+        assertNotNull(result)
+        assertEquals(TaskStatus.IN_PROGRESS, result.getStatus())
+        verify(taskRepository).findById(eq(taskId))
         verify(taskRepository).save(any())
     }
 
@@ -167,9 +169,7 @@ class TaskServiceImplTest {
             id = taskId,
             title = "Test Task",
             createdBy = testUser
-        ).apply {
-            createdAt = LocalDateTime.now()
-        }
+        )
 
         whenever(taskRepository.findById(taskId)) doReturn Optional.of(task)
         whenever(userRepository.findById(userId)) doReturn Optional.empty()

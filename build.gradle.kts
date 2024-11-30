@@ -51,3 +51,9 @@ allOpen {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+// Add after your existing configuration
+tasks.register<ProjectStateGenerator>("generateProjectState") {
+	group = "documentation"
+	description = "Generates PROJECT_STATE.md with current project state"
+}
