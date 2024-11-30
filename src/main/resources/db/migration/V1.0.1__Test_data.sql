@@ -1,7 +1,3 @@
--- Clean up
-TRUNCATE TABLE tasks CASCADE;
-TRUNCATE TABLE users CASCADE;
-
 -- Test Users
 INSERT INTO users (id, username, email, password, role)
 VALUES ('11111111-1111-1111-1111-111111111111', 'john.doe', 'john@company.com', 'password', 'REGULAR'),

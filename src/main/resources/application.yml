@@ -6,35 +6,37 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
     show-sql: true
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:db/migration/schema.sql
+
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    postgresql-username: ${spring.datasource.username}
+    postgresql-password: ${spring.datasource.password}
+    baseline-version: 0
+    clean-disabled: false # Enable only for development!
 
 ---
 spring:
+  config:
+    activate:
+      on-profile: test
+
   datasource:
     url: jdbc:postgresql://localhost:5432/task_manager_test
     username: postgres
     password: postgres
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:db/migration/schema.sql
-      data-locations: classpath:db/migration/test-data.sql
 
-logging:
-  level:
-    org.springframework.jdbc.core: DEBUG
-    org.hibernate.SQL: DEBUG
+  flyway:
+    clean-on-validation-error: true
+    clean-disabled: false
