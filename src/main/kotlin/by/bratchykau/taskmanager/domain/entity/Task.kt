@@ -101,4 +101,38 @@ class Task(
 		get() = deadline?.let {
 			LocalDateTime.now().isAfter(it) && status != TaskStatus.DONE
 		} == true
+	
+	/**
+	 * Implements the plus operator to combine two tasks into a new task
+	 * Useful for merging related tasks
+	 */
+	operator fun plus(other: Task): Task {
+		require(this.createdBy == other.createdBy) { "Cannot merge tasks from different creators" }
+		
+		return Task(
+			title = "${this.title} + ${other.title}",
+			description = listOfNotNull(this.description, other.description)
+				.joinToString("\n\n"),
+			priority = maxOf(this.priority, other.priority),
+			assignedTo = this.assignedTo ?: other.assignedTo,
+			createdBy = this.createdBy,
+			deadline = maxOf(this.deadline ?: LocalDateTime.MAX,
+				other.deadline ?: LocalDateTime.MAX)
+				.takeUnless { it == LocalDateTime.MAX }
+		)
+	}
+	
+	/**
+	 * Implements comparison operators for tasks based on priority
+	 */
+	operator fun compareTo(other: Task): Int {
+		return this.priority.weight.compareTo(other.priority.weight)
+	}
+	
+	/**
+	 * Implements contains operator to check if a user is involved with the task
+	 */
+	operator fun contains(user: User): Boolean {
+		return user == createdBy || user == assignedTo
+	}
 }
