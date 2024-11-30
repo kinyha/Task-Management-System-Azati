@@ -12,7 +12,7 @@ interface TaskService {
     fun updateTaskStatus(dto: UpdateTaskStatusDto): Task
     fun assignTask(taskId: UUID, userId: UUID): Task
     fun findTasksByStatus(status: TaskStatus): List<TaskResponse>
-    //fun findOverdueTasks(): List<Task>
+    fun findOverdueTasks(): List<Task>
     fun getTaskById(taskId: UUID): Task
 }
 

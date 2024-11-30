@@ -57,4 +57,9 @@ class TaskController(
 			ResponseEntity.notFound().build()
 		}
 	}
+	
+	@GetMapping("/overdueTasks")
+	fun getOverdueTasks(): List<TaskResponse> {
+		return taskMapper.toTaskResponseList(taskService.findOverdueTasks())
+	}
 }

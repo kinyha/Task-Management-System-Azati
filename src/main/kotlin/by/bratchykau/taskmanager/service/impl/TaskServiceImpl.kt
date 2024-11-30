@@ -6,6 +6,8 @@ import by.bratchykau.taskmanager.domain.dto.UpdateTaskStatusDto
 import by.bratchykau.taskmanager.domain.entity.Task
 import by.bratchykau.taskmanager.domain.enums.TaskStatus
 import by.bratchykau.taskmanager.exception.TaskNotFoundException
+import by.bratchykau.taskmanager.extensions.isCompletedOnTime
+import by.bratchykau.taskmanager.extensions.validateDeadline
 import by.bratchykau.taskmanager.mapper.TaskMapper
 import by.bratchykau.taskmanager.repository.TaskRepository
 import by.bratchykau.taskmanager.repository.UserRepository
@@ -32,6 +34,7 @@ class TaskServiceImpl(
 		}
 		
 		val task = taskMapper.toEntity(dto, creator, assignee)
+			.validateDeadline() // Using extension function
 		return taskRepository.save(task)
 	}
 	
@@ -67,4 +70,9 @@ class TaskServiceImpl(
 		return taskRepository.findById(taskId)
 			.orElseThrow { TaskNotFoundException(taskId) }
 	}
+	
+	@Transactional(readOnly = true)
+	override fun findOverdueTasks(): List<Task> =
+		taskRepository.findAll()
+			.filter { !it.isCompletedOnTime() }  // Using extension function
 }
