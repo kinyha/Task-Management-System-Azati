@@ -59,6 +59,12 @@ tasks.withType<Test> {
 
 tasks.bootJar {
 	archiveFileName.set("app.jar")
+	manifest {
+		attributes(
+			"Main-Class" to "org.springframework.boot.loader.launch.JarLauncher",
+			"Start-Class" to "by.bratchykau.taskmanager.TaskManagementSystemApplicationKt"
+		)
+	}
 }
 
 tasks.register<ProjectStateGenerator>("generateProjectState") {
