@@ -6,12 +6,17 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class TaskDetailedInfo(
-    val id: UUID,
-    val title: String,
-    val status: TaskStatus,
-    val priority: Priority,
-    val assignedUsername: String?,
-    val creatorUsername: String,
-    val createdAt: LocalDateTime,
-    val deadline: LocalDateTime?
-)
+	val id: UUID,
+	val title: String,
+	val status: TaskStatus,
+	val priority: Priority,
+	val assignedUsername: String?,
+	val creatorUsername: String,
+	val createdAt: LocalDateTime,
+	val deadline: LocalDateTime?
+) {
+	
+	// add operator function component for destructuring
+	operator fun component9(): Pair<String?, LocalDateTime?> =
+		Pair(assignedUsername, deadline)
+}

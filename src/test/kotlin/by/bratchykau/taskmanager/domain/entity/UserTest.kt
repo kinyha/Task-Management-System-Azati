@@ -1,8 +1,7 @@
 package by.bratchykau.taskmanager.domain.entity
 
 import by.bratchykau.taskmanager.domain.enums.UserRole
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
 
 class UserTest {

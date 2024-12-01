@@ -1,6 +1,6 @@
 # Task Management System
 
-A robust task management backend system developed with Kotlin and Spring Boot, featuring enterprise-grade architecture. This project serves as a learning initiative to transition from Java to Kotlin while implementing industry best practices.
+A task management backend system developed with Kotlin and Spring Boot. This project serves as a learning initiative to transition from Java to Kotlin while implementing industry best practices.
 
 ## Technology Stack
 
@@ -43,14 +43,14 @@ The application will be available at `http://localhost:8080`
 ### Core Language Features
 - [x] Data classes for DTOs
 - [x] Extension functions
-- [x] Scope functions (let, apply, with, run, also)
+- [ ] Scope functions (let, apply, with, run, also)
 - [x] Operator overloading
 - [ ] Inline functions
-- [x] Destructuring declarations
+- [ ] Destructuring declarations
 
 ### Advanced Features
-- [x] Custom delegates
-- [x] JVM annotations (@JvmStatic, @JvmOverloads)
+- [ ] Custom delegates
+- [ ] JVM annotations (@JvmStatic, @JvmOverloads)
 - [ ] Coroutines
 - [ ] Kotlin/JS
 
@@ -65,8 +65,10 @@ The application will be available at `http://localhost:8080`
 
 ## Next Steps
 
-1. Implement remaining Kotlin features (Coroutines, Kotlin/JS)
-2. Add API documentation
-3. Implement security features
-4. Set up monitoring and logging
+1. Inline func
+2. Distractive Variables
+3. Implement remaining Kotlin features (Coroutines, Kotlin/JS)
+4. Add API documentation
+5. Implement security features
+6. Set up monitoring and logging
 

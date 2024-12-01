@@ -4,6 +4,8 @@ package by.bratchykau.taskmanager.extensions
 import by.bratchykau.taskmanager.domain.entity.Task
 import by.bratchykau.taskmanager.domain.entity.User
 import by.bratchykau.taskmanager.domain.enums.TaskStatus
+import by.bratchykau.taskmanager.utils.extensions.isCompletedOnTime
+import by.bratchykau.taskmanager.utils.extensions.validateDeadline
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime

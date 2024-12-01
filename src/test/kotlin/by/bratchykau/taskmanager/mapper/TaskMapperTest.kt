@@ -40,7 +40,6 @@ class TaskMapperTest {
 		assertEquals(dto.title, result.title)
 		assertEquals(dto.description, result.description)
 		assertEquals(dto.priority, result.priority)
-		//assertNull(result.assignedTo)
 		assertEquals(creator, result.createdBy)
 	}
 	
@@ -68,7 +67,10 @@ class TaskMapperTest {
 		
 		// then
 		assertEquals(task.id, result.id)  // This is safe as we explicitly set the ID
-		// ... rest of assertions
+		assertEquals(task.title, result.title)
+		assertEquals(task.description, result.description)
+		assertEquals(task.getStatus(), result.status)
+		
 	}
 	
 	// Add new test for null ID handling

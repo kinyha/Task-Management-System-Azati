@@ -6,12 +6,15 @@ import by.bratchykau.taskmanager.domain.dto.UpdateTaskStatusDto
 import by.bratchykau.taskmanager.domain.entity.Task
 import by.bratchykau.taskmanager.domain.enums.TaskStatus
 import by.bratchykau.taskmanager.exception.TaskNotFoundException
-import by.bratchykau.taskmanager.extensions.isCompletedOnTime
-import by.bratchykau.taskmanager.extensions.validateDeadline
 import by.bratchykau.taskmanager.mapper.TaskMapper
 import by.bratchykau.taskmanager.repository.TaskRepository
 import by.bratchykau.taskmanager.repository.UserRepository
 import by.bratchykau.taskmanager.service.TaskService
+import by.bratchykau.taskmanager.utils.executeIfActive
+import by.bratchykau.taskmanager.utils.extensions.isCompletedOnTime
+import by.bratchykau.taskmanager.utils.extensions.validateDeadline
+import by.bratchykau.taskmanager.utils.filterCritical
+import by.bratchykau.taskmanager.utils.measureTimeMillis
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -75,4 +78,31 @@ class TaskServiceImpl(
 	override fun findOverdueTasks(): List<Task> =
 		taskRepository.findAll()
 			.filter { !it.isCompletedOnTime() }  // Using extension function
+	
+	
+	@Transactional(readOnly = true)
+	override fun processCriticalOverdueTasks(action: (Task) -> Unit) {
+		val executionTime = measureTimeMillis {
+			findOverdueTasks()
+				.filterCritical()
+				.forEach { task ->
+					task.executeIfActive {
+						action(it)
+					}
+				}
+		}
+		println("Processing critical overdue tasks took $executionTime ms")
+	}
+	
+	@Transactional(readOnly = true)
+	fun getTaskDetailsForReport(status: TaskStatus): List<String> {
+		return taskRepository.findTasksWithDetailedInfo(status).map { taskInfo ->
+			// use destructuring
+			val (id, title, status, priority, assignedUser, creator, created, deadline, assignment) = taskInfo
+			// assignment это Pair из assignedUsername и deadline
+			val (assignee, dueDate) = assignment
+			
+			"Task $title (ID: $id) - Status: $status, Assigned to: ${assignee ?: "Unassigned"}"
+		}
+	}
 }

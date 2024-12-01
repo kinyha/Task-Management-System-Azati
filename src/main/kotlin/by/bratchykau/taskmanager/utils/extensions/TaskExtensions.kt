@@ -1,4 +1,4 @@
-package by.bratchykau.taskmanager.extensions
+package by.bratchykau.taskmanager.utils.extensions
 
 import by.bratchykau.taskmanager.domain.entity.Task
 import by.bratchykau.taskmanager.domain.enums.TaskStatus

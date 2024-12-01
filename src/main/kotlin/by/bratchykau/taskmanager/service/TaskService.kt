@@ -14,5 +14,6 @@ interface TaskService {
     fun findTasksByStatus(status: TaskStatus): List<TaskResponse>
     fun findOverdueTasks(): List<Task>
     fun getTaskById(taskId: UUID): Task
+    fun processCriticalOverdueTasks(action: (Task) -> Unit)
 }
 
