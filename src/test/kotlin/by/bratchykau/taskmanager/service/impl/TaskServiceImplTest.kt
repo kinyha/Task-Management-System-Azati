@@ -54,11 +54,11 @@ class TaskServiceImplTest {
     fun `createTask should create task successfully`() {
         // Step 1: Set up test data
         val dto = CreateTaskDto(
-            title = "Test Task",
+            _title = "Test Task",
             description = "Test Description",
             priority = Priority.HIGH,
             assignedToId = null,
-            deadline = LocalDateTime.now().plusDays(1),
+            _deadline = LocalDateTime.now().plusDays(1),
             createdById = testUser.id
         )
 

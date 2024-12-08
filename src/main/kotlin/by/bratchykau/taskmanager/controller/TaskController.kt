@@ -21,7 +21,7 @@ class TaskController(
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	fun createTask(@RequestBody dto: CreateTaskDto): TaskResponse {
-		val task = taskService.createTask(dto.validate())
+		val task = taskService.createTask(dto)
 		return taskMapper.toResponse(task)
 	}
 	

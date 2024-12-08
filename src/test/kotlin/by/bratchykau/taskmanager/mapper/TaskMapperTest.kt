@@ -25,11 +25,11 @@ class TaskMapperTest {
 		)
 		
 		val dto = CreateTaskDto(
-			title = "Test Task",
+			_title = "Test Task",
 			description = "Description",
 			priority = Priority.HIGH,
 			assignedToId = null,
-			deadline = LocalDateTime.now(),
+			_deadline = LocalDateTime.now().plusDays(1),
 			createdById = creator.id
 		)
 		
