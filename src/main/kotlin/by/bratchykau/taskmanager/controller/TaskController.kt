@@ -15,7 +15,7 @@ import java.util.*
 @RequestMapping("/api/v1/tasks")
 class TaskController(
 	private val taskService: TaskService,
-	private val taskMapper: TaskMapper
+	private val taskMapper: TaskMapper,
 ) {
 	
 	@PostMapping

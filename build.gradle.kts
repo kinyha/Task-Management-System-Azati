@@ -1,9 +1,9 @@
 plugins {
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
+	kotlin("jvm") version "2.0.21"
+	kotlin("plugin.spring") version "2.0.21"
 	id("org.springframework.boot") version "3.4.0"
 	id("io.spring.dependency-management") version "1.1.6"
-	kotlin("plugin.jpa") version "1.9.25"
+	kotlin("plugin.jpa") version "2.0.21"
 }
 
 group = "by.bratchykau"
@@ -11,7 +11,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -48,6 +48,13 @@ kotlin {
 	}
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+	kotlinOptions {
+		jvmTarget = "17"
+		freeCompilerArgs = listOf("-Xjvm-default=all")
+	}
+}
+
 allOpen {
 	annotation("jakarta.persistence.Entity")
 	annotation("jakarta.persistence.MappedSuperclass")
@@ -68,7 +75,7 @@ tasks.bootJar {
 	}
 }
 
-tasks.register<ProjectStateGenerator>("generateProjectState") {
-	group = "documentation"
-	description = "Generates PROJECT_STATE.md with current project state"
-}
+//tasks.register<ProjectStateGenerator>("generateProjectState") {
+//	group = "documentation"
+//	description = "Generates PROJECT_STATE.md with current project state"
+//}

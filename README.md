@@ -1,6 +1,7 @@
 # Task Management System
 
-A task management backend system developed with Kotlin and Spring Boot. This project serves as a learning initiative to transition from Java to Kotlin while implementing industry best practices.
+A task management backend system developed with Kotlin and Spring Boot. This project serves as a learning initiative to
+transition from Java to Kotlin while implementing industry best practices.
 
 ## Technology Stack
 
@@ -16,6 +17,7 @@ A task management backend system developed with Kotlin and Spring Boot. This pro
 ## Quick Start with Docker
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/kinyha/Task-Management-System-Azati.git
 cd task-management-system
@@ -23,14 +25,17 @@ cd docker
 ```
 
 2. Build and run with Docker Compose:
+
 ```bash
 docker-compose up --build
 ```
+
 The application will be available at `http://localhost:8080`
 
 ## API Endpoints
 
 ### Task Management
+
 - `POST /api/v1/tasks` - Create a new task
 - `PUT /api/v1/tasks/{taskId}/status` - Update task status
 - `PUT /api/v1/tasks/{taskId}/assign/{userId}` - Assign task to user
@@ -41,34 +46,37 @@ The application will be available at `http://localhost:8080`
 ## Implementation Progress
 
 ### Core Language Features
+
 - [x] Data classes for DTOs
 - [x] Extension functions
-- [ ] Scope functions (let, apply, with, run, also)
+- [x] Scope function
+- [x] Inline functions
+- [x] Destructuring declarations
 - [x] Operator overloading
-- [ ] Inline functions
-- [ ] Destructuring declarations
 
 ### Advanced Features
+
 - [ ] Custom delegates
+- [ ] Inline value classes
 - [ ] JVM annotations (@JvmStatic, @JvmOverloads)
 - [ ] Coroutines
 - [ ] Kotlin/JS
 
 ### Development Practices
+
 - [x] Test-Driven Development (TDD)
 - [x] Database version control with migrations
 - [x] Custom query optimization
 
 ### Infrastructure
+
 - [x] Docker containerization
 - [x] PostgreSQL configuration
 
 ## Next Steps
-
-1. Inline func
-2. Distractive Variables
-3. Implement remaining Kotlin features (Coroutines, Kotlin/JS)
-4. Add API documentation
+1. Implement custom delegates
+2. Implement remaining Kotlin features (Coroutines, Kotlin/JS)
+3. Add API documentation
+4. Set up monitoring and logging
 5. Implement security features
-6. Set up monitoring and logging
 
