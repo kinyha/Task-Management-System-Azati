@@ -56,11 +56,11 @@ The application will be available at `http://localhost:8080`
 
 ### Advanced Features
 
-- [ ] Custom delegates
-- [ ] Inline value classes
-- [ ] JVM annotations (@JvmStatic, @JvmOverloads)
-- [ ] Coroutines
-- [ ] Kotlin/JS
+- [x] Custom delegates
+- [x] Inline value classes
+- [x] JVM annotations (@JvmStatic, @JvmOverloads)
+- [x] Coroutines
+- [x] Kotlin/JS
 
 ### Development Practices
 
