@@ -13,6 +13,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/tasks")
+@CrossOrigin(origins = ["http://localhost:8081"]) // Add CORS support
 class TaskController(
 	private val taskService: TaskService,
 	private val taskMapper: TaskMapper,
